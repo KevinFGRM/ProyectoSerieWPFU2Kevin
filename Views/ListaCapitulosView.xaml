@@ -1,0 +1,103 @@
+﻿<UserControl x:Class="ProyectoSerieWPFU2Kevin.Views.ListaCapitulosView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ProyectoSerieWPFU2Kevin.Views" xmlns:viewmodels="clr-namespace:ProyectoSerieWPFU2Kevin.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:ListaTemporadas}"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450">
+    
+    <ScrollViewer>
+        <DockPanel>
+            <Grid DockPanel.Dock="Top">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top">
+                        <StackPanel Background="#2C2A2A">
+                            <Image Margin="250,0,250,0" Source="https://imgsrv.crunchyroll.com/cdn-cgi/image/format=auto,width=1200,height=675,fit=contain,quality=85/catalog/crunchyroll/a249096c7812deb8c3c2c907173f3774.jpe"/>
+                        </StackPanel>
+                        <StackPanel Background="#191919">
+                            <StackPanel.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Margin" Value="100,10,100,10"></Setter>
+                                    <Setter Property="Foreground" Value="White"></Setter>
+                                </Style>
+                            </StackPanel.Resources>
+                            <TextBlock FontFamily="Arial" FontSize="50" Text="One Piece"></TextBlock>
+                            <TextBlock FontFamily="Arial" TextWrapping="Wrap" FontSize="20" Text="Monkey D. Luffy se niega a que nadie se interponga en su camino para convertirse en Rey de los Piratas. Se lanza a surcar los mares y se convertirá en un capitán dispuesto a no darse por vencido jamás hasta hacerse con el mayor tesoro de la historia: el legendario One Piece."></TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </DockPanel>
+            </Grid>
+            <Grid DockPanel.Dock="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="140" />
+                </Grid.ColumnDefinitions>
+                <ComboBox Margin="5" ItemsSource="{Binding ListaDeTemporadas}" SelectedItem="{Binding Temporada}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Temporada " />
+                                <TextBlock Text="{Binding NumTemporada}" />
+                                <TextBlock Text=" - " />
+                                <TextBlock Text="{Binding Titulo}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <UniformGrid Height="45" Rows="1" Grid.Column="1">
+                    <Button Margin="5" Command="{Binding CambiarVistaCommand}" CommandParameter="{x:Static viewmodels:Vistas.AgregarT}">
+                        <Image Stretch="UniformToFill" Source="C:\Users\PC\Desktop\WpfProyectos\ProyectoSerieWPFU2Kevin\Views\3914208.png"></Image>
+                    </Button>
+                    <Button Margin="5" Command="{Binding CambiarVistaCommand}" CommandParameter="{x:Static viewmodels:Vistas.EditarT}">
+                        <Image Stretch="UniformToFill" Source="C:\Users\PC\Desktop\WpfProyectos\ProyectoSerieWPFU2Kevin\Views\10742911.png"></Image>
+                    </Button>
+                    <Button Margin="5" Command="{Binding CambiarVistaCommand}" CommandParameter="{x:Static viewmodels:Vistas.EliminarT}">
+                        <Image Stretch="UniformToFill" Source="C:\Users\PC\Desktop\WpfProyectos\ProyectoSerieWPFU2Kevin\Views\3917411.png"></Image>
+                    </Button>
+                </UniformGrid>
+
+            </Grid>
+            <DockPanel>
+                <Border BorderBrush="Transparent" Height="500" BorderThickness="1,0,0,0"></Border>
+                <ListBox DockPanel.Dock="Top" x:Name="ListCapitulos" Margin="5" ItemsSource="{Binding Temporada.ListaCapitulos}" SelectedItem="{Binding Capitulo}">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel Width="400" Height="500">
+                                
+                                <DockPanel.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="FontFamily" Value="Arial"></Setter>
+                                        <Setter Property="FontSize" Value="20"></Setter>
+                                    </Style>
+                                </DockPanel.Resources>
+                                <Image DockPanel.Dock="Top" Source="{Binding URL}"/>
+                                <DockPanel DockPanel.Dock="Top">
+                                    <TextBlock Text="{Binding NumeroCapitulo, StringFormat='Capítulo: {0}'}"/>
+                                    <TextBlock Text=" - " />
+                                    <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Titulo}" />
+                                </DockPanel>
+                                <TextBlock FontSize="16" DockPanel.Dock="Top" TextWrapping="Wrap" TextTrimming="WordEllipsis" Text="{Binding Descripcion}"/>
+                                <TextBlock FontSize="14" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Text="{Binding Fecha, StringFormat='dd-MM-yyyy'}" HorizontalAlignment="Right" Margin="10" Foreground="Gray"/>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <WrapPanel DockPanel.Dock="Bottom" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Button Margin="5" Content="Agregar" Command="{Binding CambiarVistaCommand}" CommandParameter="{x:Static viewmodels:Vistas.AgregarC}"></Button>
+                    <Button Margin="5" Content="Editar" Command="{Binding CambiarVistaCommand}" CommandParameter="{x:Static viewmodels:Vistas.EditarC}">
+                    </Button>
+                    <Button Margin="5" Content="Eliminar" Command="{Binding CambiarVistaCommand}" CommandParameter="{x:Static viewmodels:Vistas.EliminarC}">
+                    </Button>
+                    <Button Margin="5" Content="Ver Detalles" Command="{Binding CambiarVistaCommand}" CommandParameter="{x:Static viewmodels:Vistas.Detalles}">
+                    </Button>
+                </WrapPanel>
+            </DockPanel>
+        </DockPanel>
+    </ScrollViewer>
+</UserControl>
